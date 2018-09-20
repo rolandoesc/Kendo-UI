@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'kendo-testapp';
+  onButtonClick() {
+    this.title = 'Hello from Kendo UI!';
+  }
 }

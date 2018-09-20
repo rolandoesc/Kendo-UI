@@ -1,0 +1,111 @@
+<div class="row example-wrapper">
+  <div class="col-xs-12 col-sm-6 offset-sm-3 example-col">
+    <div class="card">
+      <div class="card-block">
+          <form class="k-form" [formGroup]="registrationForm">
+              <fieldset>
+                  <legend>Usuario</legend>
+
+                  <label class="k-form-field">
+                    <span>Nombre</span>
+                    <input class="k-textbox" placeholder="Nombre" formControlName="firstName"/>
+                  </label>
+                  <label class="k-form-field">
+                    <span>Apellidos</span>
+                    <input class="k-textbox" placeholder="Apellidos" formControlName="lastName"/>
+                  </label>
+                  <div class="k-form-field">
+                    <span>Fecha de nacimiento</span>
+
+                    <kendo-datepicker  [format]="'dd/MM/yyyy'" formControlName="birthDate" [value]="value">
+
+                    </kendo-datepicker>
+                  </div>
+                  <kendo-autocomplete
+                    [data]="countries"
+                    [placeholder]="'e.g. Denmark'"
+                    [suggest]="true"
+                    class="countries"
+                    [value]='country'
+                    formControlName="country"
+                    >
+                    </kendo-autocomplete>
+
+
+                  <div class="k-form-field">
+                    <span>Sexo</span>
+
+                    <input type="radio" name="sex" id="female" value="Femenino" class="k-radio" formControlName="sex">
+                    <label class="k-radio-label" for="female">Femenino</label>
+
+                    <input type="radio" name="sex" id="male" value="Masculino" class="k-radio" checked="checked" formControlName="sex">
+                    <label class="k-radio-label" for="male">Masculino</label>
+                </div>
+                  <label class="k-form-field">
+                      <span>Email <span class="k-required">*</span></span>
+                      <input type="email" class="k-textbox" placeholder="correo@ejemplo.com" formControlName="email"/>
+                  </label>
+                  <label class="k-form-field">
+                      <span>Compañía<span class="k-field-info">opcional</span></span>
+                      <input class="k-textbox" placeholder="Compañía" formControlName="company"/>
+                  </label>
+              </fieldset>
+
+              <!-- <fieldset>
+                  <legend>Credentials</legend>
+                  <label class="k-form-field">
+                      <span>Username</span>
+                      <input class="k-textbox" value="bbatista" placeholder="Your username" />
+                  </label>
+                  <label class="k-form-field">
+                      <span>Password</span>
+                      <input type="password" class="k-textbox" value="123456" placeholder="Your password"/>
+                  </label>
+                  <label class="k-form-field">
+                      <input type="checkbox" id="auth-2fa" class="k-checkbox" checked="checked">
+                      <label class="k-checkbox-label" for="auth-2fa">Enable two-factor authentication</label>
+                  </label>
+              </fieldset> -->
+
+              <div class="text-right">
+                <button type="button" class="k-button">Cancelar</button>
+                <button type="button" class="k-button k-primary" (click)="onRegister(registrationForm)">Registrar</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<kendo-grid [data]="users" [height]="400" [columnMenu]="{ filter:true }">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="btn btn-primary" kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+        <button type="btn btn-success" kendoGridExcelCommand ><span class="k-icon k-i-file-excel"></span>Export to Excel</button>
+    </ng-template>
+    <kendo-grid-column field="firstName" title="Nombre" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="lastName" title="Apellido" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="sex" title="Sexo" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="country" title="País" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="birthDate" format='{0:dd/MM/yyyy}' title="Fecha Nacimiento" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="email" title="Email" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="company" title="Compañía" width="100">
+    </kendo-grid-column>
+    <kendo-grid-pdf fileName="Products.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+        <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+        <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+         <div class="page-template">
+            <div class="header">
+              Multi-page grid with automatic page breaking
+            </div>
+            
+          </div>
+        </ng-template>
+        <kendo-grid-excel fileName="Categories.xlsx" [fetchData]="allData"></kendo-grid-excel>
+    </kendo-grid-pdf>
+</kendo-grid>
